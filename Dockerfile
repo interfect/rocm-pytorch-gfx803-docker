@@ -1,4 +1,17 @@
-FROM docker.io/rocm/pytorch:rocm5.3_ubuntu20.04_py3.7_pytorch_staging
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get -y install wget gcc g++ python3.8-dev build-essential && \
+    wget https://repo.radeon.com/amdgpu-install/5.3/ubuntu/focal/amdgpu-install_5.3.50300-1_all.deb -O install.deb && \
+    apt-get -y install ./install.deb && \
+    rm ./install.deb && \
+    apt-get clean && \
+    yes | amdgpu-install --usecase=rocm --no-dkms && \
+    apt-get -y uninstall amdgpu-install && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set env var for gfx803 
 ENV ROC_ENABLE_PRE_VEGA=1
