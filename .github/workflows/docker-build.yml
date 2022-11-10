@@ -1,0 +1,10 @@
+name: Release Automation
+on:
+  push:
+  create:
+jobs:
+  docker-build:
+    name: Publish Docker image to Github Container Registry
+    uses: flamestro/build-push-github-action@v1.1.0
+    with:
+      token: ${{ secrets.GITHUB_TOKEN }}
