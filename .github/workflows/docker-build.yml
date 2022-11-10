@@ -1,4 +1,16 @@
-- name: publish docker image
-  uses: flamestro/build-push-github-action@v1.1.0
-  with:
-    token: ${{ secrets.GITHUB_TOKEN }}
+# See usage example: https://github.com/flamestro/portfolio-page/blob/e06547939d0a8099360ec3c3c50b847b281d66a5/.github/workflows/deploy.yml
+name: Build
+on:
+  push:
+jobs:
+  build-container:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: publish
+        uses: flamestro/build-push-github-action@v1.1.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+
